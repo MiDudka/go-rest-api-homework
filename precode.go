@@ -47,13 +47,17 @@ var tasks = map[string]Task{
 func getTask(w http.ResponseWriter, r *http.Request) {
 	resp, err := json.Marshal(tasks)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		fmt.Printf("Error: %s", err)
+		http.Error(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp)
+	if _, err := w.Write(resp); err != nil {
+		fmt.Printf("Error: %s", err)
+	}
 }
 
 func createTask(w http.ResponseWriter, r *http.Request) {
@@ -101,6 +105,9 @@ func getIdTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(resp)
+	if _, err := w.Write(resp); err != nil {
+		fmt.Printf("Error: %s", err)
+	}
 }
 
 func deleteIdTask(w http.ResponseWriter, r *http.Request) {
@@ -111,11 +118,8 @@ func deleteIdTask(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Задача не найдена", http.StatusNotFound)
 		return
 	}
-
 	delete(tasks, id)
-
 	w.WriteHeader(http.StatusOK)
-
 }
 
 func main() {
