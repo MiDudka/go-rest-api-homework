@@ -54,7 +54,6 @@ func getTask(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(resp)
 	if _, err := w.Write(resp); err != nil {
 		fmt.Printf("Error: %s", err)
 	}
@@ -104,7 +103,6 @@ func getIdTask(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(resp)
 	if _, err := w.Write(resp); err != nil {
 		fmt.Printf("Error: %s", err)
 	}
